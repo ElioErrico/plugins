@@ -1,0 +1,10 @@
+{
+  "name": "06_CAT_Internet_search",
+  "version": "1.0.0",
+  "description": "Ricerca sul web con recupero di contenuti e meta-dati utili (titolo, fonte, data) per arricchire la conoscenza dell'agente e fornire riferimenti. Per creare/aggiornare il tool usa [crea_tool_06]. Per cancellarlo usa [cancella_tool_06].",
+  "author_name": "Elio Errico",
+  "author_url": "https://github.com/ElioErrico",
+  "plugin_url": "https://github.com/ElioErrico/plugins/06_CAT_Internet_search",
+  "tags": "cat, internet, web, search, browsing, sources, citations",
+  "thumb": "https://raw.githubusercontent.com/ElioErrico/plugins/06_CAT_Internet_search/main/Internet_search.png"
+}

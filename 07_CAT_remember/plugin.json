@@ -1,0 +1,10 @@
+{
+  "name": "07_CAT_Ricorda:",
+  "version": "1.9.0",
+  "description": "Salva in memoria le informazioni fornite quando il messaggio inizia con 'ricorda:'. Per creare/aggiornare il tool usa [crea_tool_07]. Per cancellarlo usa [cancella_tool_07].",
+  "author_name": "Elio Errico",
+  "author_url": "https://github.com/ElioErrico",
+  "plugin_url": "https://github.com/ElioErrico/plugins/07_CAT_remember",
+  "tags": "cat, memories, declarative memories",
+  "thumb": "https://raw.githubusercontent.com/ElioErrico/plugins/07_CAT_remember/main/ricorda.png"
+}

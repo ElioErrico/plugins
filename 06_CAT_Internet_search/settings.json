@@ -1,0 +1,5 @@
+{
+    "tool_name": "Internet Search",
+    "duck_duck_go_search_description": "- Use 'duck_duck_go_search' for real-time or general information.\n",
+    "crawl_site_content_description": "- Use 'crawl_site_content' to extract details from specified web pages.\n"
+}

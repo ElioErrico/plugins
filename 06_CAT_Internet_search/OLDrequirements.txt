@@ -1,0 +1,5 @@
+bs64
+crawl4ai
+crawl4ai[pdf]
+asyncio
+strip-markdown>=1.3

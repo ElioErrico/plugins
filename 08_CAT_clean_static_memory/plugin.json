@@ -1,0 +1,10 @@
+{
+    "name": "08_CAT_clean_static_memory",
+    "version": "1.9.1",
+    "description": "Plugin per la pulizia automatica di cat/static: preserva i file .json e i file che iniziano con 'format'. Fast reply disponibili: update_static_cleanup_time per aggiornare il timing e clean_static_now per lanciare subito la pulizia.",
+    "author_name": "Elio Errico",
+    "author_url": "https://github.com/ElioErrico",
+    "plugin_url": "https://github.com/ElioErrico/plugins/08_CAT_clean_static_memory",
+    "tags": "cat, cleanup, maintenance, scheduler, static files, fast reply",
+    "thumb": "https://raw.githubusercontent.com/ElioErrico/plugins/08_CAT_clean_static_memory/main/cleanup.png"
+}

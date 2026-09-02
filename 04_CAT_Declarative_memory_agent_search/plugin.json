@@ -1,0 +1,11 @@
+{
+    "name": "04_CAT_Declarative_memory_agent_search",
+    "version": "1.9.0",
+    "description": "Tool per cercare nella declarative memory utile per mettere il react agent nelle condizioni di cercare nuove informazioni. Per creare/aggiornare il tool usa [crea_tool_04]. Per cancellarlo usa [cancella_tool_04].",
+    "author_name": "Elio Errico",
+    "author_url": "https://github.com/ElioErrico",
+    "plugin_url": "https://github.com/ElioErrico/plugins/04_CAT_Declarative_memory_agent_search",
+    "tags": "cat, declarative_memory, agent, search, react",
+    "thumb": "https://raw.githubusercontent.com/ElioErrico/plugins/04_CAT_Declarative_memory_agent_search/main/Declarative_memory_agent_search.png"
+  }
+  

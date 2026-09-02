@@ -1,0 +1,11 @@
+{
+    "name": "05_CAT_Standard_Analist",
+    "version": "1.9.0",
+    "description": "Questo plugin analizza una normativa, la struttura in un dizionario e restituisce un file Excel con il contenuto della norma. Per creare/aggiornare il tool usa [crea_tool_05]. Per cancellarlo usa [cancella_tool_05].",
+    "author_name": "Elio Errico",
+    "author_url": "https://github.com/ElioErrico",
+    "plugin_url": "https://github.com/ElioErrico/plugins/05_CAT_Standard_Analist",
+    "tags": "rabbit_hole, file_ingestion, standard, excel, normativa",
+    "thumb": "https://raw.githubusercontent.com/ElioErrico/plugins/05_CAT_Standard_Analist/main/Standard_Analist.png"
+  }
+  

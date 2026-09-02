@@ -1,0 +1,200 @@
+"""
+Plugin Remember - Permette di inserire memorie nella memoria dichiarativa del Cat
+usando la frase "ricorda: testo da memorizzare"
+
+Le memorie vengono processate come documenti, permettendo al plugin filter_and_upload
+di applicare correttamente i tag e i filtri.
+
+Utilizza l'hook fast_reply per rispondere immediatamente senza passare per l'LLM.
+Genera anche un file .txt scaricabile con il contenuto memorizzato.
+"""
+
+from cat.mad_hatter.decorators import hook
+from cat.log import log
+import time
+import re
+import json
+import os
+from datetime import datetime
+
+
+def get_static_url():
+    """Restituisce l'URL base per i file statici"""
+    return "/static/"
+
+
+def chunk_manual_memory_text(cat, content_to_remember, source, metadata):
+    """Divide il testo della memoria usando il chunker standard del Rabbit Hole."""
+    docs = cat.rabbit_hole.string_to_docs(
+        cat=cat,
+        file_bytes=content_to_remember.encode("utf-8"),
+        source=source,
+        content_type="text/plain",
+    )
+
+    for doc in docs:
+        current_metadata = dict(getattr(doc, "metadata", {}) or {})
+        current_metadata.update(metadata)
+        current_metadata["source"] = source
+        doc.metadata = current_metadata
+
+    return docs
+
+
+@hook
+def fast_reply(fast_reply, cat):
+    """
+    Hook che intercetta il messaggio PRIMA di passare per l'LLM.
+    Se l'utente scrive "ricorda: ..." il contenuto viene processato come documento
+    e inserito nella memoria dichiarativa tramite il Rabbit Hole.
+    
+    Restituisce direttamente la risposta senza coinvolgere l'LLM, rendendo
+    l'operazione più veloce ed efficiente.
+    """
+
+    settings = cat.mad_hatter.get_plugin().load_settings()
+    tool_key = settings["tool_name"]    
+    # ---- Guard: abilita/disabilita tool per utente; fallback=False ----
+    try:
+        with open("cat/static/tools_status.json", "r", encoding="utf-8") as f:
+            ts = json.load(f) or {}
+    except Exception:
+        ts = {}
+
+    uid = str(getattr(cat, "user_id", "") or "")
+    enabled = bool(
+        ts.get("tools", {})
+          .get(tool_key, {})
+          .get("user_id_tool_status", {})
+          .get(uid, False)
+    )
+    
+    if not enabled:
+        return fast_reply
+
+    user_message = cat.working_memory.get("user_message_json", {}).get("text", "")
+    
+    # Pattern robusto per catturare il comando "ricorda:"
+    ricorda_pattern = r'^ricorda\s*:\s*(.+)$'
+    match = re.match(ricorda_pattern, user_message.strip(), re.IGNORECASE | re.DOTALL)
+    
+    if match:
+        # Estrai il contenuto da memorizzare
+        content_to_remember = match.group(1).strip()
+        
+        if not content_to_remember:
+            return {
+                "output": "⚠️ Non hai specificato cosa memorizzare. Usa il formato: ricorda: [testo da memorizzare]"
+            }
+        
+        try:
+            # Genera un titolo automatico usando l'LLM
+            title_prompt = f"""Genera un titolo breve e descrittivo (massimo 5 parole) per questa memoria:
+
+"{content_to_remember}"
+
+Rispondi SOLO con il titolo, senza punteggiatura finale."""
+            
+            log.info(f"[Remember Plugin] Generazione titolo per memoria...")
+            generated_title = cat.llm(title_prompt).strip()
+            
+            # Rimuovi eventuali virgolette o punteggiatura finale
+            generated_title = generated_title.strip('"\'.,;:!?')
+            
+            log.info(f"[Remember Plugin] Titolo generato: {generated_title}")
+            
+            # Genera nome file sicuro (rimuovi caratteri non validi)
+            safe_filename = re.sub(r'[^\w\s-]', '', generated_title)
+            safe_filename = re.sub(r'[-\s]+', '_', safe_filename)
+            timestamp = int(time.time())
+            filename = f"{safe_filename}_{timestamp}.txt"
+            
+            # Percorso della cartella static
+            static_dir = "cat/static"
+            os.makedirs(static_dir, exist_ok=True)
+            filepath = os.path.join(static_dir, filename)
+            
+            # Crea il contenuto del file con metadata
+            file_content = f"""Titolo: {generated_title}
+Data creazione: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+Tipo: Memoria Manuale
+Utente: {cat.user_id}
+
+---
+
+{content_to_remember}
+"""
+            
+            # Salva il file
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(file_content)
+            
+            log.info(f"[Remember Plugin] File creato: {filepath}")
+            
+            created_at = time.time()
+            manual_memory_metadata = {
+                "source": generated_title,
+                "type": "manual_memory",
+                "user_input": True,
+                "original_command": "ricorda",
+                "created_at": created_at,
+                "file_path": filepath
+            }
+            
+            log.info(f"[Remember Plugin] Creazione memoria manuale per utente {cat.user_id}")
+            log.info(f"[Remember Plugin] Contenuto: {content_to_remember[:100]}...")
+            
+            # Usa il chunker standard del Rabbit Hole prima di salvare i documenti.
+            # In questo modo il plugin segue la stessa pipeline di ingestione del core.
+            docs = chunk_manual_memory_text(
+                cat=cat,
+                content_to_remember=content_to_remember,
+                source=generated_title,
+                metadata=manual_memory_metadata
+            )
+
+            log.info(f"[Remember Plugin] Memoria suddivisa in {len(docs)} chunk")
+
+            # Salva i chunk passando comunque dagli hook del Rabbit Hole.
+            cat.rabbit_hole.store_documents(
+                cat=cat,
+                docs=docs,
+                source=generated_title,
+                metadata=manual_memory_metadata
+            )
+            
+            log.info(f"[Remember Plugin] Memoria inserita con successo")
+            
+            # Notifica via websocket
+            cat.send_ws_message(
+                f"💾 {generated_title}: {content_to_remember[:50]}...",
+                msg_type="notification"
+            )
+            
+            # Invia link per il download del file
+            download_url = f'{get_static_url()}{filename}?v={timestamp}'
+            cat.send_ws_message(
+                f'📄 File creato: <a href="{download_url}" download="{filename}">Scarica {generated_title}.txt</a>',
+                "chat"
+            )
+            
+            # Restituisci la risposta diretta (senza passare per l'LLM)
+            return {
+                "output": f"""✅ **Ho memorizzato:**
+
+*{generated_title}*
+
+Questa informazione è stata salvata con i tuoi tag attivi e sarà disponibile quando ne avrai bisogno."""
+            }
+            
+        except Exception as e:
+            log.error(f"[Remember Plugin] Errore durante l'inserimento: {str(e)}")
+            import traceback
+            log.error(traceback.format_exc())
+            
+            return {
+                "output": f"❌ Si è verificato un errore durante la memorizzazione:\n\n`{str(e)}`\n\nRiprova o contatta l'amministratore se il problema persiste."
+            }
+    
+    # Se non è un comando "ricorda:", restituisci None per continuare il flusso normale
+    return fast_reply
