@@ -1,0 +1,35 @@
+{
+    "report_types": [
+      {
+        "key": "standard",
+        "label": "Standard Report",
+        "description": "General purpose report with flexible structure suitable for most use cases. Includes title, executive summary, main content, findings, recommendations and conclusion.",
+        "emoji": ""
+      },
+      {
+        "key": "technical",
+        "label": "Technical Report",
+        "description": "Detailed technical documentation with methodology, analysis, results and technical specifications. Ideal for engineering, development or scientific contexts.",
+        "emoji": ""
+      },
+      {
+        "key": "business",
+        "label": "Business Report",
+        "description": "Executive-focused report with business context, strategic implications, ROI analysis and implementation plans. Perfect for stakeholders and decision makers.",
+        "emoji": ""
+      },
+      {
+        "key": "executive_summary",
+        "label": "Executive Summary",
+        "description": "Concise high-level overview (2-3 paragraphs) highlighting key topics, findings and insights. Quick summary for busy executives.",
+        "emoji": ""
+      }
+    ],
+    "default_report_type": "standard",
+    "version": "1.0.0",
+    "metadata": {
+      "author": "Report Maker Plugin",
+      "last_updated": "2025-01-11",
+      "schema_version": "1.0"
+    }
+  }

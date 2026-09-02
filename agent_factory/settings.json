@@ -1,0 +1,5 @@
+{
+    "agent": "ReAct Agent",
+    "stream_tool_calls": true,
+    "notify_tool_calls": false
+}

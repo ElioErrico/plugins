@@ -1,0 +1,11 @@
+{
+    "name": "11_CAT_Report_Maker",
+    "version": "1.9.0",
+    "description": "Tool per mettere l'agente nelle condizioni di creare un report Word sulla base della conversazione avvenuta. Per creare/aggiornare il tool usa [crea_tool_11]. Per cancellarlo usa [cancella_tool_11].",
+    "author_name": "Elio Errico",
+    "author_url": "https://github.com/ElioErrico",
+    "plugin_url": "https://github.com/ElioErrico/plugins/11_CAT_Report_Maker",
+    "tags": "cat, deep think, agent, search, react",
+    "thumb": "https://raw.githubusercontent.com/ElioErrico/plugins/11_CAT_report_maker/main/Report_maker.png"
+  }
+  

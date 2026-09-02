@@ -1,0 +1,10 @@
+{
+    "name": "13_CAT_video_analyzer",
+    "version": "0.1.0",
+    "description": "Upload di video mp4 verso il backend Video Analyzer e ritorno del JSON tramite API. Per creare/aggiornare il tool usa [crea_tool_13]. Per cancellarlo usa [cancella_tool_13].",
+    "author_name": "Elio Errico",
+    "author_url": "https://github.com/ElioErrico",
+    "plugin_url": "https://github.com/ElioErrico/plugins/13_CAT_video_analyzer",
+    "tags": "cat, video, analyzer, upload, api, mp4",
+    "thumb": "https://raw.githubusercontent.com/ElioErrico/plugins/13_CAT_video_analyzer/main/video_cat.jpg"
+}

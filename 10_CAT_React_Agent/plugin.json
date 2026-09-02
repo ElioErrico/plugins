@@ -1,0 +1,10 @@
+{
+    "name": "10_CAT_React_Agent",
+    "version": "0.1.0",
+    "description": "ReAct agent for CheshireCat. This plugin requires the Agent Factory plugin.",
+    "author_name": "Elio Errico",
+    "author_url": "https://github.com/ElioErrico",
+    "plugin_url": "https://github.com/ElioErrico/plugins/10_CAT_React_Agent",
+    "thumb": "https://raw.githubusercontent.com/ElioErrico/plugins/10_CAT_React_Agent/main/React_Agent.png",
+    "tags": "Agent Factory, Agent, ReAct"
+}
