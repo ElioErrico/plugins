@@ -1,0 +1,11 @@
+{
+    "name": "03_CAT_allowed_tools",
+    "version": "1.9.0",
+    "description": "Selettore dei tool abilitati dall’utente, consente di gestire in modo semplice quali strumenti possono essere utilizzati all’interno del sistema.",
+    "author_name": "Elio Errico",
+    "author_url": "https://github.com/ElioErrico",
+    "plugin_url": "https://github.com/ElioErrico/plugins/03_CAT_allowed_tools",
+    "tags": "cat, tools, permissions, user_settings, toggle",
+    "thumb": "https://raw.githubusercontent.com/ElioErrico/plugins/03_CAT_allowed_tools/main/CAT_allowed_tools.png"
+  }
+  

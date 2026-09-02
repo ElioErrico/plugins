@@ -1,0 +1,10 @@
+{
+  "name": "00_CAT_doc_front_end_manager",
+  "version": "1.8.1",
+  "description": "User Tags Endpoints and documentation manager",
+  "author_name": "ElioErr",
+  "author_url": "https://github.com/ElioErrico",
+  "plugin_url": "https://github.com/ElioErrico/plugins/00_CAT_doc_front_end_manager",
+  "tags": "cat, metadata, declarative memory, memory, filter, filters, upload, catalogator, catalog",
+  "thumb": "https://raw.githubusercontent.com/ElioErrico/plugins/00_CAT_doc_front_end_manager/main/front_doc_end_manager.png"
+}

@@ -1,0 +1,11 @@
+{
+    "name": "02_CAT_IngestAnything_Elio_Mod",
+    "version": "1.9.0",
+    "description": "This plugin extends the RabbitHole's capabilities and allows ingesting a handful of extra formats.",
+    "author_name": "Elio Errico",
+    "author_url": "https://github.com/ElioErrico",
+    "plugin_url": "https://github.com/ElioErrico/plugins/02_CAT_ingestanything_Elio_mod",
+    "tags": "cat, rabbit_hole, file_ingestion",
+    "thumb": "https://raw.githubusercontent.com/ElioErrico/plugins/02_CAT_ingestanything_Elio_mod/main/IngestAnything.png"
+  }
+  

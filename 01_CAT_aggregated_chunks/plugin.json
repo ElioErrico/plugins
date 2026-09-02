@@ -1,0 +1,11 @@
+{
+    "name": "01_CAT_aggregated_chunks",
+    "version": "1.6.1",
+    "description": "Aggregates different chunks to have one",
+    "author_name": "Elio Errico",
+    "author_url": "https://github.com/ElioErrico",
+    "plugin_url": "https://github.com/ElioErrico/plugins/01_CAT_aggregated_chunks",
+    "tags": "cat, chunk_size, rabbithole, metadata, filtering, retrieval",
+    "thumb": "https://raw.githubusercontent.com/ElioErrico/plugins/01_CAT_aggregated_chunks/main/aggregated_chunk.png"
+  }
+  

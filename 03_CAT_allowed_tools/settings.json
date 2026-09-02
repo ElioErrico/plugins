@@ -1,0 +1,14 @@
+{
+    "prompt_prefix_incipit": "You are an advanced AI assistant capable of complex reasoning and tools utilization.\n",
+    "tool_orchestration_header": "## Tool Usage Guidelines\n",
+    "episodic_memory_k": 0,
+    "episodic_memory_threshold": 0.7,
+    "declarative_memory_k": 6,
+    "declarative_memory_threshold": 0.7,
+    "procedural_memory_k": 3,
+    "procedural_memory_threshold": 0.7,
+    "user_name": "Human",
+    "language": "Italian",
+    "chunk_size": 127,
+    "chunk_overlap": 56
+}
