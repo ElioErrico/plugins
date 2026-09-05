@@ -1,4 +1,5 @@
 import html
+import os
 
 from fastapi import File, Form, HTTPException, UploadFile
 from fastapi.responses import HTMLResponse
@@ -19,20 +20,48 @@ from .video_analyzer_client import (
 
 
 PLUGIN_ID = "13_CAT_video_analyzer"
+ENV_API_KEY_NAMES = ("VIDEO_ANALYZER_API_KEY", "OPENAI_API_KEY")
+TRANSCRIPTION_ENV_API_KEY_NAMES = ("VIDEO_ANALYZER_TRANSCRIPTION_API_KEY", "OPENAI_API_KEY")
 
 
 def _load_plugin_settings(cat):
     return cat.mad_hatter.plugins[PLUGIN_ID].load_settings()
 
 
+def _resolve_api_key(settings: dict, field_name: str, env_names: tuple[str, ...]) -> str:
+    configured_value = str(settings.get(field_name) or "").strip()
+    if configured_value and configured_value not in {"...", "__FROM_ENV__"}:
+        return configured_value
+
+    for env_name in env_names:
+        env_value = str(os.getenv(env_name) or "").strip()
+        if env_value:
+            return env_value
+
+    return ""
+
+
 def _build_backend_payload(settings: dict) -> dict:
     return build_payload(
         {
             "client": settings.get("client"),
-            "api_key": settings.get("api_key"),
+            "api_key": _resolve_api_key(settings, "api_key", ENV_API_KEY_NAMES),
             "api_url": settings.get("api_url"),
             "model": settings.get("model"),
             "keep_frames": settings.get("keep_frames"),
+            "transcription_execution_mode": settings.get("transcription_execution_mode"),
+            "transcription_local_model": settings.get("transcription_local_model"),
+            "transcription_openai_model": settings.get("transcription_openai_model"),
+            "transcription_api_key": _resolve_api_key(
+                settings,
+                "transcription_api_key",
+                TRANSCRIPTION_ENV_API_KEY_NAMES,
+            ),
+            "transcription_api_url": settings.get("transcription_api_url"),
+            "language": settings.get("transcription_language"),
+            "device": settings.get("transcription_device"),
+            "transcription_timeout": settings.get("transcription_timeout"),
+            "transcription_prompt": settings.get("transcription_prompt"),
         }
     )
 
@@ -453,6 +482,7 @@ def analyze_video(
             update_session(session_id, status="failed", error=str(e), result=None)
         raise
 
+    payload_with_job_id = {"result": result}
     cleaned_result = clean_result_payload(payload_with_job_id)
     cleaned_result_as_string = clean_result_string(payload_with_job_id)
 

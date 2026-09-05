@@ -25,8 +25,8 @@ class VideoAnalyzerSettings(BaseModel):
         description="Client LLM da inviare al backend Video Analyzer.",
     )
     api_key: str = Field(
-        default="...",
-        description="API key del provider LLM da inviare al backend Video Analyzer.",
+        default="__FROM_ENV__",
+        description="API key del provider LLM; lascia __FROM_ENV__ per leggerla da VIDEO_ANALYZER_API_KEY o OPENAI_API_KEY.",
     )
     api_url: str = Field(
         default="https://api.openai.com/v1",
@@ -39,6 +39,42 @@ class VideoAnalyzerSettings(BaseModel):
     keep_frames: bool = Field(
         default=True,
         description="Se true, chiede al backend di mantenere i frame estratti.",
+    )
+    transcription_execution_mode: str = Field(
+        default="openai",
+        description="Modalita di trascrizione audio del backend: 'local' oppure 'openai'.",
+    )
+    transcription_local_model: str = Field(
+        default="medium",
+        description="Modello locale usato dal backend quando transcription_execution_mode='local'.",
+    )
+    transcription_openai_model: str = Field(
+        default="gpt-4o-mini-transcribe",
+        description="Modello OpenAI usato dal backend quando transcription_execution_mode='openai'.",
+    )
+    transcription_api_key: str = Field(
+        default="__FROM_ENV__",
+        description="API key per la trascrizione OpenAI; lascia __FROM_ENV__ per leggere VIDEO_ANALYZER_TRANSCRIPTION_API_KEY o OPENAI_API_KEY.",
+    )
+    transcription_api_url: str = Field(
+        default="https://api.openai.com/v1",
+        description="API base URL per la trascrizione OpenAI del backend.",
+    )
+    transcription_language: str = Field(
+        default="it",
+        description="Codice lingua ISO da suggerire alla trascrizione audio.",
+    )
+    transcription_device: str = Field(
+        default="cpu",
+        description="Device usato dalla trascrizione locale del backend.",
+    )
+    transcription_timeout: float = Field(
+        default=300.0,
+        description="Timeout in secondi per la richiesta di trascrizione OpenAI.",
+    )
+    transcription_prompt: str = Field(
+        default="",
+        description="Prompt opzionale da inviare al motore di trascrizione.",
     )
 
 

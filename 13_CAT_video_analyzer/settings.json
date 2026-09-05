@@ -1,11 +1,20 @@
 {
     "tool_name": "video_analyzer",
     "video_analyzer_description": "- Use 'video_analyzer' to analyze videos and get a procedure.",
-    "remember_tool_name": "ricorda il video: ...il video...",
+    "remember_tool_name": "video_analyzer",
     "backend_base_url": "http://host.docker.internal:8000",
     "client": "openai_api",
     "api_key": "...",
     "api_url": "https://api.openai.com/v1",
     "model": "gpt-5.2",
-    "keep_frames": true
+    "keep_frames": true,
+    "transcription_execution_mode": "openai",
+    "transcription_local_model": "medium",
+    "transcription_openai_model": "gpt-4o-mini-transcribe",
+    "transcription_api_key": "...",
+    "transcription_api_url": "https://api.openai.com/v1",
+    "transcription_language": "it",
+    "transcription_device": "cpu",
+    "transcription_timeout": 300,
+    "transcription_prompt": ""
 }
